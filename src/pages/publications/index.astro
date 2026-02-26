@@ -1,0 +1,32 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import Container from "@components/Container.astro";
+import ArrowCard from "@components/ArrowCard.astro";
+import { PUBLICATIONS } from "@consts";
+
+const publications = (await getCollection("publications"))
+  .filter((pub) => !pub.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<Layout title={PUBLICATIONS.TITLE} description={PUBLICATIONS.DESCRIPTION}>
+  <Container>
+    <aside data-pagefind-ignore>
+      <div class="space-y-10">
+        <div class="animate section-heading font-semibold text-neutral-900 dark:text-white">
+          Publications
+        </div>
+        <ul class="animate not-prose flex flex-col gap-4">
+          {
+            publications.map((pub) => (
+              <li>
+                <ArrowCard entry={pub} />
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </aside>
+  </Container>
+</Layout>
