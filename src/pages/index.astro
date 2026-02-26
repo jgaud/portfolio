@@ -23,54 +23,31 @@ const projects: CollectionEntry<"projects">[] = (
 <Layout title={HOME.TITLE} description={HOME.DESCRIPTION}>
   <Container>
     <aside data-pagefind-ignore>
-      <h1 class="font-semibold text-black dark:text-white">
-        Introducing Astro Micro 🔬
-      </h1>
       <div class="space-y-16">
-        <section>
+        <!-- Hero Section -->
+        <section class="animate space-y-4">
+          <div class="space-y-2">
+            <h1 class="text-3xl font-bold tracking-tight text-neutral-900 dark:text-white sm:text-4xl">
+              Hi, I'm <Link href="#connect"><span class="gradient-text">Jean-Gabriel</span></Link>
+            </h1>
+            <p class="text-lg text-neutral-500 dark:text-neutral-400">
+              PhD &mdash; Machine Learning, Software Development & Education
+            </p>
+          </div>
+          <div class="h-px w-16 bg-gradient-to-r from-accent-500 to-accent-300"></div>
           <article class="space-y-4">
-            <span>
-              <p>
-                Astro Micro is an accessible theme for <Link
-                  href="https://astro.build/">Astro</Link
-                >. It's a fork of
-                <Link href="https://github.com/markhorn-dev">
-                  Mark Horn's
-                </Link> popular theme <Link
-                  href="https://astro.build/themes/details/astronano/"
-                  >Astro Nano</Link
-                >. Like Nano, Micro comes with zero frameworks installed.
-              </p>
-              <p>
-                Micro adds features like <Link href="https://pagefind.app/"
-                  >Pagefind</Link
-                > for search, <Link href="https://giscus.app">Giscus</Link> for comments,
-                and more. For a full list of changes, see this <Link
-                  href="/blog/00-micro-changelog">blog post</Link
-                >.
-              </p>
-            </span>
-            <span class="animate">
-              <p>
-                Micro still comes with everything great about Nano — full type
-                safety, a sitemap, an RSS feed, and Markdown + MDX support.
-                Styled with TailwindCSS and preconfigured with system, light,
-                and dark themes.
-              </p>
-              <p>
-                Visit
-                <Link href="https://github.com/trevortylerlee/astro-micro">
-                  Astro Micro on GitHub
-                </Link>
-                to fork the repository to get started.
-              </p>
-            </span>
+            <p>
+              Welcome to my personal corner of the internet. I <Link href="/blog">write</Link> about
+              machine learning,
+              software development, and education &mdash; sharing insights from
+              my research and projects.
+            </p>
           </article>
         </section>
 
         <section class="animate space-y-6">
           <div class="flex flex-wrap items-center justify-between gap-y-2">
-            <h2 class="font-semibold text-black dark:text-white">
+            <h2 class="section-heading font-semibold text-neutral-900 dark:text-white">
               Latest posts
             </h2>
             <Link href="/blog"> See all posts </Link>
@@ -88,7 +65,7 @@ const projects: CollectionEntry<"projects">[] = (
 
         <section class="animate space-y-6">
           <div class="flex flex-wrap items-center justify-between gap-y-2">
-            <h2 class="font-semibold text-black dark:text-white">
+            <h2 class="section-heading font-semibold text-neutral-900 dark:text-white">
               Recent projects
             </h2>
             <Link href="/projects"> See all projects </Link>
@@ -104,8 +81,8 @@ const projects: CollectionEntry<"projects">[] = (
           </ul>
         </section>
 
-        <section class="animate space-y-4">
-          <h2 class="font-semibold text-black dark:text-white">
+        <section id="connect" class="animate space-y-4">
+          <h2 class="section-heading font-semibold text-neutral-900 dark:text-white">
             Let's Connect
           </h2>
           <article>

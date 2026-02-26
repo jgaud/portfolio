@@ -7,7 +7,7 @@ const { prevPost, nextPost } = Astro.props;
     prevPost?.id ? (
       <a
         href={`/blog/${prevPost?.id}`}
-        class="group relative flex flex-nowrap rounded-lg border border-black/15 px-4 py-3 pl-10 no-underline transition-colors duration-300 ease-in-out hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:border-white/20 dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"
+        class="group relative flex flex-nowrap rounded-xl border border-neutral-200/80 bg-white/50 px-4 py-3 pl-10 no-underline transition-all duration-300 ease-in-out hover:border-accent-300/50 hover:bg-white hover:shadow-sm hover:text-accent-600 focus-visible:border-accent-300/50 focus-visible:bg-white focus-visible:text-accent-600 dark:border-white/[0.08] dark:bg-white/[0.02] dark:hover:border-accent-400/20 dark:hover:bg-white/[0.05] dark:hover:text-accent-400 dark:focus-visible:border-accent-400/20 dark:focus-visible:bg-white/[0.05] dark:focus-visible:text-accent-400"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -37,7 +37,7 @@ const { prevPost, nextPost } = Astro.props;
     nextPost?.id ? (
       <a
         href={`/blog/${nextPost?.id}`}
-        class="group relative flex grow flex-row-reverse flex-nowrap rounded-lg border border-black/15 px-4 py-4 pr-10 no-underline transition-colors duration-300 ease-in-out hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:border-white/20 dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"
+        class="group relative flex grow flex-row-reverse flex-nowrap rounded-xl border border-neutral-200/80 bg-white/50 px-4 py-4 pr-10 no-underline transition-all duration-300 ease-in-out hover:border-accent-300/50 hover:bg-white hover:shadow-sm hover:text-accent-600 focus-visible:border-accent-300/50 focus-visible:bg-white focus-visible:text-accent-600 dark:border-white/[0.08] dark:bg-white/[0.02] dark:hover:border-accent-400/20 dark:hover:bg-white/[0.05] dark:hover:text-accent-400 dark:focus-visible:border-accent-400/20 dark:focus-visible:bg-white/[0.05] dark:focus-visible:text-accent-400"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

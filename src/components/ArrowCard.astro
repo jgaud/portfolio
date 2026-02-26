@@ -12,20 +12,20 @@ const { entry } = Astro.props as {
 
 <a
   href={`/${entry.collection}/${entry.id}`}
-  class="not-prose group relative flex flex-nowrap rounded-lg border border-black/15 px-4 py-3 pr-10 transition-colors duration-300 ease-in-out hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:border-white/20 dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"
+  class="not-prose group relative flex flex-nowrap rounded-xl border border-neutral-200/80 bg-white/50 px-5 py-4 pr-12 shadow-sm transition-all duration-300 ease-in-out hover:border-accent-300/50 hover:bg-white hover:shadow-md hover:shadow-accent-500/5 focus-visible:border-accent-300/50 focus-visible:bg-white focus-visible:shadow-md dark:border-white/[0.08] dark:bg-white/[0.02] dark:hover:border-accent-400/20 dark:hover:bg-white/[0.05] dark:hover:shadow-accent-400/5 dark:focus-visible:border-accent-400/20 dark:focus-visible:bg-white/[0.05]"
 >
   <div class="flex flex-1 flex-col truncate">
-    <div class="font-semibold">
+    <div class="font-semibold text-neutral-900 dark:text-white">
       {entry.data.title}
     </div>
-    <div class="text-sm">
+    <div class="text-sm text-neutral-500 dark:text-neutral-400">
       {entry.data.description}
     </div>
   </div>
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
-    class="absolute right-2 top-1/2 size-5 -translate-y-1/2 fill-none stroke-current stroke-2"
+    class="absolute right-3 top-1/2 size-5 -translate-y-1/2 fill-none stroke-current stroke-2 text-neutral-400 transition-all duration-300 ease-in-out group-hover:text-accent-500 group-focus-visible:text-accent-500 dark:text-neutral-500 dark:group-hover:text-accent-400 dark:group-focus-visible:text-accent-400"
   >
     <line
       x1="5"

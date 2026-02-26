@@ -85,25 +85,11 @@ const { title, description, image = "/astro-micro.jpg" } = Astro.props;
     const backToPrev = document.getElementById("back-to-prev");
     backToPrev?.addEventListener("click", () => window.history.back());
 
-    const lightThemeButton = document.getElementById("light-theme-button");
-    lightThemeButton?.addEventListener("click", () => {
-      localStorage.setItem("theme", "light");
-      toggleTheme(false);
-      updateThemeButtons();
-    });
-
-    const darkThemeButton = document.getElementById("dark-theme-button");
-    darkThemeButton?.addEventListener("click", () => {
-      localStorage.setItem("theme", "dark");
-      toggleTheme(true);
-      updateThemeButtons();
-    });
-
-    const systemThemeButton = document.getElementById("system-theme-button");
-    systemThemeButton?.addEventListener("click", () => {
-      localStorage.setItem("theme", "system");
-      toggleTheme(window.matchMedia("(prefers-color-scheme: dark)").matches);
-      updateThemeButtons();
+    const themeToggle = document.getElementById("theme-toggle");
+    themeToggle?.addEventListener("click", () => {
+      const isDark = document.documentElement.classList.contains("dark");
+      localStorage.setItem("theme", isDark ? "light" : "dark");
+      toggleTheme(!isDark);
     });
 
     window
@@ -118,32 +104,7 @@ const { title, description, image = "/astro-micro.jpg" } = Astro.props;
   }
 
   function updateThemeButtons() {
-    const theme = localStorage.getItem("theme");
-    const lightThemeButton = document.getElementById("light-theme-button");
-    const darkThemeButton = document.getElementById("dark-theme-button");
-    const systemThemeButton = document.getElementById("system-theme-button");
-
-    function removeActiveButtonTheme(button) {
-      button?.classList.remove("bg-black/5");
-      button?.classList.remove("dark:bg-white/5");
-    }
-
-    function addActiveButtonTheme(button) {
-      button?.classList.add("bg-black/5");
-      button?.classList.add("dark:bg-white/5");
-    }
-
-    removeActiveButtonTheme(lightThemeButton);
-    removeActiveButtonTheme(darkThemeButton);
-    removeActiveButtonTheme(systemThemeButton);
-
-    if (theme === "light") {
-      addActiveButtonTheme(lightThemeButton);
-    } else if (theme === "dark") {
-      addActiveButtonTheme(darkThemeButton);
-    } else {
-      addActiveButtonTheme(systemThemeButton);
-    }
+    // No-op: toggle button updates via CSS (dark:hidden / dark:block)
   }
 
   function animate() {
