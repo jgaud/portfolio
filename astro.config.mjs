@@ -7,7 +7,7 @@ import rehypeExternalLinks from "rehype-external-links";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://portfolio-ruddy-delta-l799yexcvk.vercel.app/",
+  site: "https://jgaud.com/",
   integrations: [sitemap(), mdx(), pagefind()],
   vite: {
     plugins: [tailwindcss()],
