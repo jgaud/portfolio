@@ -81,7 +81,7 @@ import Search from "astro-pagefind/components/Search";
   });
 
   backdrop?.addEventListener("click", (event) => {
-    if (!event.target.closest("#pagefind-container")) {
+    if (event.target === backdrop) {
       closePagefind();
     }
   });
