@@ -1,0 +1,62 @@
+---
+import { type CollectionEntry, getCollection, render } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import Container from "@components/Container.astro";
+import FormattedDate from "@components/FormattedDate.astro";
+import BackToPrevious from "@components/BackToPrevious.astro";
+import Link from "@components/Link.astro";
+
+export async function getStaticPaths() {
+  const publications = (await getCollection("publications"))
+    .filter((pub) => !pub.data.draft)
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  return publications.map((pub) => ({
+    params: { id: pub.id },
+    props: pub,
+  }));
+}
+type Props = CollectionEntry<"publications">;
+
+const publication = Astro.props;
+const { Content } = await render(publication);
+---
+
+<Layout title={publication.data.title} description={publication.data.description}>
+  <Container>
+    <div class="animate">
+      <BackToPrevious href="/publications">Back to publications</BackToPrevious>
+    </div>
+    <div class="animate my-10 space-y-1">
+      <div class="flex items-center gap-1.5">
+        <div class="font-base text-sm">
+          <FormattedDate date={publication.data.date} />
+        </div>
+      </div>
+      <h1 class="text-3xl font-semibold text-neutral-900 dark:text-white">
+        {publication.data.title}
+      </h1>
+      {publication.data.authors && (
+        <div class="text-sm text-neutral-500 dark:text-neutral-400">
+          {publication.data.authors}
+        </div>
+      )}
+      {publication.data.venue && (
+        <div class="text-sm italic text-neutral-500 dark:text-neutral-400">
+          {publication.data.venue}
+        </div>
+      )}
+      {
+        publication.data.paperURL && (
+          <nav class="flex gap-1 text-accent-600 dark:text-accent-400">
+            <Link href={publication.data.paperURL} external>
+              Link
+            </Link>
+          </nav>
+        )
+      }
+    </div>
+    <article class="animate">
+      <Content />
+    </article>
+  </Container>
+</Layout>

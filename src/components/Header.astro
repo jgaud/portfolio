@@ -2,35 +2,47 @@
 import Container from "@components/Container.astro";
 import Link from "@components/Link.astro";
 import { SITE } from "@consts";
+import { getCollection } from "astro:content";
+
+const blog = (await getCollection("blog")).filter((post) => !post.data.draft);
+const hasBlogPosts = blog.length > 0;
 ---
 
 <header transition:persist>
   <Container>
-    <div class="flex flex-wrap justify-between gap-y-2">
+    <div class="flex flex-wrap items-center justify-between gap-y-2">
       <Link href="/" underline={false}>
-        <div class="font-semibold">
-          {SITE.TITLE}&nbsp;🔬
+        <div class="font-semibold text-neutral-900 dark:text-white tracking-tight">
+          {SITE.TITLE}
         </div>
       </Link>
-      <nav class="flex items-center gap-1 text-sm">
-        <Link href="/blog">blog</Link>
-        <span>
+      <nav class="flex items-center gap-1.5 text-sm">
+        {hasBlogPosts && (
+          <>
+            <Link href="/blog">blog</Link>
+            <span class="text-neutral-300 dark:text-neutral-600">
+              {`/`}
+            </span>
+          </>
+        )}
+        <Link href="/projects">projects</Link>
+        <span class="text-neutral-300 dark:text-neutral-600">
           {`/`}
         </span>
-        <Link href="/projects">projects</Link>
-        <span>
+        <Link href="/publications">publications</Link>
+        <span class="text-neutral-300 dark:text-neutral-600">
           {`/`}
         </span>
         <button
           id="magnifying-glass"
           aria-label="Search"
-          class="flex items-center rounded-sm border border-black/15 bg-neutral-100 px-2 py-1 text-xs transition-colors duration-300 ease-in-out hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:border-white/20 dark:bg-neutral-900 dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"
+          class="flex items-center gap-1.5 rounded-lg border border-neutral-200/80 bg-white/60 px-2.5 py-1.5 text-xs text-neutral-500 transition-all duration-300 ease-in-out hover:border-accent-300/50 hover:bg-white hover:text-accent-600 focus-visible:border-accent-300/50 focus-visible:bg-white focus-visible:text-accent-600 dark:border-white/[0.08] dark:bg-white/[0.03] dark:text-neutral-400 dark:hover:border-accent-400/20 dark:hover:bg-white/[0.06] dark:hover:text-accent-400 dark:focus-visible:border-accent-400/20 dark:focus-visible:bg-white/[0.06] dark:focus-visible:text-accent-400"
         >
           <svg
-            height="16"
+            height="14"
             stroke-linejoin="round"
             viewBox="0 0 16 16"
-            width="16"
+            width="14"
             style="color: currentcolor;"
             ><path
               fill-rule="evenodd"
@@ -38,7 +50,51 @@ import { SITE } from "@consts";
               d="M3.5 7C3.5 5.067 5.067 3.5 7 3.5C8.933 3.5 10.5 5.067 10.5 7C10.5 7.88461 10.1718 8.69256 9.63058 9.30876L9.30876 9.63058C8.69256 10.1718 7.88461 10.5 7 10.5C5.067 10.5 3.5 8.933 3.5 7ZM9.96544 11.0261C9.13578 11.6382 8.11014 12 7 12C4.23858 12 2 9.76142 2 7C2 4.23858 4.23858 2 7 2C9.76142 2 12 4.23858 12 7C12 8.11014 11.6382 9.13578 11.0261 9.96544L14.0303 12.9697L14.5607 13.5L13.5 14.5607L12.9697 14.0303L9.96544 11.0261Z"
               fill="currentColor"></path></svg
           >
-          &nbsp;Search
+          Search
+        </button>
+        <button
+          id="theme-toggle"
+          aria-label="Toggle theme"
+          class="group flex items-center justify-center rounded-lg border border-neutral-200/80 bg-white/60 px-2 py-1.5 text-xs hover:border-accent-300/50 hover:bg-white focus-visible:border-accent-300/50 focus-visible:bg-white dark:border-white/[0.08] dark:bg-white/[0.03] dark:hover:border-accent-400/20 dark:hover:bg-white/[0.06] dark:focus-visible:border-accent-400/20 dark:focus-visible:bg-white/[0.06] transition-all duration-300"
+        >
+          <!-- Sun icon (visible in dark mode) -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="hidden dark:block transition-colors duration-300 ease-in-out group-hover:stroke-accent-400 group-focus-visible:stroke-accent-400"
+          >
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <!-- Moon icon (visible in light mode) -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="block dark:hidden transition-colors duration-300 ease-in-out group-hover:stroke-accent-600 group-focus-visible:stroke-accent-600"
+          >
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
         </button>
       </nav>
     </div>

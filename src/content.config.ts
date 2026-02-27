@@ -24,4 +24,18 @@ const projects = defineCollection({
   }),
 });
 
-export const collections = { blog, projects };
+const publications = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: "./src/content/publications" }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    date: z.coerce.date(),
+    draft: z.boolean().optional(),
+    authors: z.string().optional(),
+    venue: z.string().optional(),
+    paperURL: z.string().optional(),
+    tags: z.array(z.string()).optional(),
+  }),
+});
+
+export const collections = { blog, projects, publications };

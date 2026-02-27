@@ -1,79 +1,68 @@
 ---
-title: "Astro Sphere"
-description: "Portfolio and blog build with astro."
-date: "03/18/2024"
-demoURL: "https://astro-sphere-demo.vercel.app"
-repoURL: "https://github.com/markhorn-dev/astro-sphere"
+title: "StreamNDR"
+description: "Open source library enabling novelty detection in data streams for Python"
+date: "2023-03-08"
+repoURL: "https://github.com/jgaud/streamndr"
 ---
 
-![Astro Sphere](/astro-sphere.jpg)
-
-Astro Sphere is a static, minimalist, lightweight, lightning fast portfolio and blog theme based on Mark Horn's personal website.
-
-It is primarily Astro, Tailwind and Typescript, with a very small amount of SolidJS for stateful components.
-
-## 🚀 Deploy your own
-
-<div class="flex gap-2">
-  <a target="_blank" aria-label="Deploy with Vercel" href="https://vercel.com/new/clone?repository-url=https://github.com/markhorn-dev/astro-sphere">
-    <img src="/deploy_vercel.svg" />
-  </a>
-  <a target="_blank" aria-label="Deploy with Netlify" href="https://app.netlify.com/start/deploy?repository=https://github.com/markhorn-dev/astro-sphere">
-    <img src="/deploy_netlify.svg" />
-  </a>
-</div>
+Stream Novelty Detection for River (StreamNDR) is a Python library for online novelty detection. StreamNDR aims to enable [novelty detection](https://deepai.org/machine-learning-glossary-and-terms/novelty-detection) in data streams for Python. It is based on the [River](https://riverml.xyz/latest/) API and follows its implementation and format.
 
 ## 📋 Features
 
-- ✅ 100/100 Lighthouse performance
-- ✅ Responsive
-- ✅ Accessible
-- ✅ SEO-friendly
-- ✅ Typesafe
-- ✅ Minimal style
-- ✅ Light/Dark Theme
-- ✅ Animated UI
-- ✅ Tailwind styling
-- ✅ Auto generated sitemap
-- ✅ Auto generated RSS Feed
-- ✅ Markdown support
-- ✅ MDX Support (components in your markdown)
-- ✅ Searchable content (posts and projects)
+- ✅ Online novelty detection for data streams
+- ✅ Based on the [River](https://www.riverml.xyz/) API
+- ✅ Implements MINAS algorithm
+- ✅ Implements ECSMiner algorithm
+- ✅ Implements ECSMiner-WF (without feedback) algorithm
+- ✅ Built-in novelty detection metrics (MNew, FNew, ErrRate)
+- ✅ Full [documentation](https://jgaud.github.io/streamndr/) available
+- ✅ Available on [PyPI](https://pypi.org/project/streamndr/)
 
-## 💯 Lighthouse score
+## 🛠 Installation
 
-![Astro Sphere Lighthouse Score](/lighthouse-nano.jpg)
+StreamNDR requires Python 3.6 or above and the [ClusOpt-Core](https://pypi.org/project/clusopt-core/) package, which needs a C/C++ compiler (such as gcc) and the [Boost.Thread library](https://robots.uc3m.es/installation-guides/install-boost.html). On Debian systems:
 
-## 🕊️ Lightweight
+```console
+sudo apt install libboost-thread-dev
+```
 
-All pages under 100kb (including fonts)
+Install the package with `pip`:
 
-## ⚡︎ Fast
+```console
+pip install streamndr
+```
 
-Rendered in ~40ms on localhost
+## ⚡️ Example Usage
 
-## 📄 Configuration
+As a quick example, we can train a MINAS model to classify a synthetic dataset created using [RandomRBF](https://riverml.xyz/dev/api/datasets/synth/RandomRBF/). The model is trained on only two of four generated classes and will try to detect the remaining classes as novelty patterns in an online fashion.
 
-The blog posts on the demo serve as the documentation and configuration.
+```python
+from streamndr.model import Minas
 
-## 💻 Commands
+clf = Minas(kini=100, cluster_algorithm='clustream', 
+            window_size=600, threshold_strategy=1, threshold_factor=1.1, 
+            min_short_mem_trigger=100, min_examples_cluster=20, verbose=1, random_state=42)
 
-All commands are run from the root of the project, from a terminal:
+clf.learn_many(np.array(X_train), np.array(y_train))
+```
 
-Replace npm with your package manager of choice. `npm`, `pnpm`, `yarn`, `bun`, etc
+The model can then be used in an online fashion, with unsupervised clusters automatically updated on each call to `predict_one`:
 
-| Command                   | Action                                            |
-| :------------------------ | :------------------------------------------------ |
-| `npm install`             | Installs dependencies                             |
-| `npm run dev`             | Starts local dev server at `localhost:4321`       |
-| `npm run sync`            | Generates TypeScript types for all Astro modules. |
-| `npm run build`           | Build your production site to `./dist/`           |
-| `npm run preview`         | Preview your build locally, before deploying      |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check`  |
-| `npm run astro -- --help` | Get help using the Astro CLI                      |
-| `npm run lint`            | Run ESLint                                        |
-| `npm run lint:fix`        | Auto-fix ESLint issues                            |
+```python
+from streamndr.metrics import MNew, FNew, ErrRate
 
+known_classes = [0, 1]
+m_new = MNew(known_classes)
+f_new = FNew(known_classes)
+err_rate = ErrRate(known_classes)
+
+for x, y_true in zip(X_test, y_test):
+    y_pred = clf.predict_one(x)
+    if y_pred is not None:
+        m_new.update(y_true, y_pred[0])
+        f_new.update(y_true, y_pred[0])
+        err_rate.update(y_true, y_pred[0])
+```
 ## 🏛️ License
 
-MIT
+BSD-3-Clause
