@@ -45,16 +45,16 @@ const { Content, headings } = await render(project);
       </h1>
       {
         (project.data.demoURL || project.data.repoURL) && (
-          <nav class="flex gap-1">
+          <nav class="flex gap-1 text-accent-600 dark:text-accent-400">
             {project.data.demoURL && (
               <Link href={project.data.demoURL} external>
-                demo
+                Demo
               </Link>
             )}
             {project.data.demoURL && project.data.repoURL && <span>/</span>}
             {project.data.repoURL && (
               <Link href={project.data.repoURL} external>
-                repo
+                Link
               </Link>
             )}
           </nav>

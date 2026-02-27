@@ -2,6 +2,10 @@
 import Container from "@components/Container.astro";
 import Link from "@components/Link.astro";
 import { SITE } from "@consts";
+import { getCollection } from "astro:content";
+
+const blog = (await getCollection("blog")).filter((post) => !post.data.draft);
+const hasBlogPosts = blog.length > 0;
 ---
 
 <header transition:persist>
@@ -13,10 +17,14 @@ import { SITE } from "@consts";
         </div>
       </Link>
       <nav class="flex items-center gap-1.5 text-sm">
-        <Link href="/blog">blog</Link>
-        <span class="text-neutral-300 dark:text-neutral-600">
-          {`/`}
-        </span>
+        {hasBlogPosts && (
+          <>
+            <Link href="/blog">blog</Link>
+            <span class="text-neutral-300 dark:text-neutral-600">
+              {`/`}
+            </span>
+          </>
+        )}
         <Link href="/projects">projects</Link>
         <span class="text-neutral-300 dark:text-neutral-600">
           {`/`}
